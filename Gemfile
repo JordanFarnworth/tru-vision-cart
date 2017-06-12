@@ -20,6 +20,7 @@ gem 'addressable'
 gem 'font-awesome-sass', '~> 4.7.0'
 gem 'sweetalert-rails'
 gem 'lodash-rails'
+gem 'bootstrap_form'
 
 gem 'sprockets-es6'
 gem 'babel-transpiler', git: 'https://github.com/babel/ruby-babel-transpiler'

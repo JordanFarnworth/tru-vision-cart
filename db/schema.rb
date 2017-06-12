@@ -10,10 +10,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170610151925) do
+ActiveRecord::Schema.define(version: 20170612221229) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "billing_addresses", force: :cascade do |t|
+    t.integer  "order_id"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "company_name"
+    t.string   "address"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["order_id"], name: "index_billing_addresses_on_order_id", using: :btree
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "company_name"
+    t.string   "address"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.string   "phone"
+    t.string   "email"
+    t.string   "card_number"
+    t.string   "expiration"
+    t.string   "cvc"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
 
   create_table "products", force: :cascade do |t|
     t.string   "sku",         null: false
@@ -25,4 +56,5 @@ ActiveRecord::Schema.define(version: 20170610151925) do
     t.index ["sku"], name: "index_products_on_sku", unique: true, using: :btree
   end
 
+  add_foreign_key "billing_addresses", "orders"
 end

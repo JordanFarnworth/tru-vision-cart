@@ -56,14 +56,29 @@
 
       <% if @products.any? %>
       <div class="row-fluid">
+        <span class="inline pull-left">
+          <input class="form-control" type="text" id="coupon-code" placeholder="coupon code">
+        </span>
         <div class="float-right">
-          <button class="btn btn-primary checkout-btn" type="button" name="button">Checkout</button>
+          <a href="/checkout" id="checkout-button" class="btn btn-primary checkout-btn" name="button">Checkout</a>
           <span class="inline">
             <h4>Total: <%= number_to_currency total %></h4>
           </span>
         </div>
       </div>
       <% end %>
+    </div>
+  </div>
+
+  <div class="row text-center">
+    <div class="col-md-6 offset-md-3">
+      <img style="width: 200px; height: 50px;" src="https://truevisionweightloss.com/wp-content/uploads/2015/08/debitcards.jpg" alt="">
+    </div>
+  </div>
+
+  <div class="row text-center">
+    <div class="col-md-6 offset-md-3">
+      <p>TruVision Health offers a sampling program for people to try our products prior to making a commitment to purchase larger quantities. This takes the place of a traditional money back guarantee. We encourage all people to sample our products prior to making any commitments to purchase larger volumes of product. TruVISION will offer a 90% return policy on items returned in resalable condition within 30 days of purchase.</p>
     </div>
   </div>
 </div>

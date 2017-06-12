@@ -1,0 +1,131 @@
+<div class="container">
+  <div class="row text-center">
+    <div class="col-md-12">
+      <h1>Secure Checkout</h1>
+      <h5>Your Information is Safe with Encrypted Data Transfer</h5>
+    </div>
+  </div>
+  <br>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="checkbox">
+        <label>Billing details</label>
+      </div>
+      <%= bootstrap_form_for(@order) do |f| %>
+        <%= f.text_field :first_name %>
+        <%= f.text_field :last_name %>
+        <%= f.text_field :company_name %>
+        <%= f.text_field :address %>
+        <%= f.text_field :city %>
+        <%= f.text_field :state %>
+        <%= f.text_field :zip, label: 'Zip Code' %>
+        <%= f.text_field :phone, label: 'Phone Number' %>
+        <%= f.email_field :email, label: 'Email Address' %>
+      <% end %>
+    </div>
+    <div class="col-md-4">
+      <div class="checkbox">
+        <label><input type="checkbox" id="billing-address" value=""> Ship to a different address?</label>
+      </div>
+      <div style="hidden" class="billing_address">
+        <%= bootstrap_form_for(@billing_address) do |f| %>
+          <%= f.text_field :first_name %>
+          <%= f.text_field :last_name %>
+          <%= f.text_field :company_name %>
+          <%= f.text_field :address %>
+          <%= f.text_field :city %>
+          <%= f.text_field :state %>
+          <%= f.text_field :zip, label: 'Zip Code' %>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-md-4 text-center">
+      <div class="row-fluid">
+        <h5>Fast Standard Shipping</h5>
+        <br>
+        <i class="fa fa-truck fa-2x" ></i>
+        3 - 7 Day Shipping (USA)
+      </div>
+      <br>
+      <br>
+
+      <div class="row-fluid">
+        <h5>Peace of Mind</h5>
+        <img style="height: 75px; width: 100px;" src="https://truevisionweightloss.com/wp-content/uploads/2017/04/041912-nortontrust-100272248-orig.jpg" alt="">
+        <br>
+        <br>
+        <img style="height: 75px; width: 100px;" src="https://truevisionweightloss.com/wp-content/uploads/2017/04/lowest-price-e1447073917988.png" alt="">
+      </div>
+      <br>
+      <br>
+
+      <div class="row-fluid">
+        <h5>Need Help?</h5>
+        <p>Just contact us 24/7 and we will respond quickly</p>
+      </div>
+    </div>
+  </div>
+  <br>
+
+  <div class="row">
+    <div class="col-md-8">
+      <h5>Your Order</h5>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @products.each do |product| %>
+          <tr>
+            <td><%= product.name %></td>
+            <td><%= product.price * product_quantity(product.sku) %></td>
+          </tr>
+          <% end %>
+          <tr>
+            <td><h5>Subtotal</h5></td>
+            <td><h5><%= number_to_currency total %></h5></td>
+          </tr>
+          <tr>
+            <td><h5>Shipping</h5></td>
+            <td><h5>USA Shipping: $11.99</h5></td>
+          </tr>
+          <tr>
+            <tr>
+              <td><h5>Total</h5></td>
+              <td><h5><%= number_to_currency(total + 11.99) %></h5></td>
+            </tr>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <br>
+
+  <div class="row">
+    <div class="col-md-8">
+      <h5>Credit Card Information</h5>
+      <%= bootstrap_form_for(@order) do |f| %>
+        <%= f.text_field :card_number, label: 'Credit Card Number' %>
+        <div class="row">
+          <div class="col-md-6">
+            <%= f.text_field :expiration, label: 'Expiration(MM/YY)' %>
+          </div>
+          <div class="col-md-6 pull-right">
+            <%= f.text_field :cvc, label: 'CVC' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <br>
+      <button class="btn btn-default" type="button" name="button">Place your order!</button>
+    </div>
+  </div>
+</div>

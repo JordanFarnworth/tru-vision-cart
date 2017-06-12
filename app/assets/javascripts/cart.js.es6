@@ -1,5 +1,11 @@
 $(document).on('turbolinks:load', () => {
   if ($('.cart-page').length > 0) {
+
+    $('#coupon-code').on('input', (event) => {
+      const code = $(event.target).val();
+      $('#checkout-button').attr('href', `/checkout?code=${code}`)
+    })
+
     // remove url params
       try {
         window.history.pushState("object or string", "Title", "/"+window.location.href.substring(window.location.href.lastIndexOf('/') + 1).split("?")[0]);
@@ -9,7 +15,6 @@ $(document).on('turbolinks:load', () => {
         // nothing
       }
     //
-
 
     // max quantity check
     if ($('.has-error').length > 0) {
