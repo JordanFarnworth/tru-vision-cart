@@ -12,7 +12,6 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
 gem 'jquery-rails'
-gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'sprockets-rails', '~> 3.0', '>= 3.0.4'
 gem 'bootstrap', git: 'https://github.com/twbs/bootstrap-rubygem'
@@ -21,6 +20,8 @@ gem 'font-awesome-sass', '~> 4.7.0'
 gem 'sweetalert-rails'
 gem 'lodash-rails'
 gem 'bootstrap_form'
+gem 'card-js-rails', '~> 1.0'
+gem 'delayed_job_active_record'
 
 gem 'sprockets-es6'
 gem 'babel-transpiler', git: 'https://github.com/babel/ruby-babel-transpiler'
@@ -34,6 +35,7 @@ group :development do
   gem 'listen', '~> 3.0.5'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'mailcatcher'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

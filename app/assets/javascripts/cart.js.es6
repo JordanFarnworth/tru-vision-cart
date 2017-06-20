@@ -1,4 +1,4 @@
-$(document).on('turbolinks:load', () => {
+$(document).ready(() => {
   if ($('.cart-page').length > 0) {
 
     $('#coupon-code').on('input', (event) => {

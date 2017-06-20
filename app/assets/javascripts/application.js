@@ -12,10 +12,10 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require jquery3
 //= require popper
 //= require bootstrap-sprockets
 //= require sweetalert
 //= require lodash
+//= require card-js
 //= require_tree .

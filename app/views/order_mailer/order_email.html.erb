@@ -1,0 +1,81 @@
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+      <h1>Order number <%= @order.id %></h1>
+      <br>
+      <br>
+      <div>
+        <h2>Order Information</h2>
+        <p>First Name: <%= @order.first_name %></p>
+        <p>Last Name: <%= @order.last_name %></p>
+        <p>Company Name: <%= @order.company_name %></p>
+        <p>Address: <%= @order.address %></p>
+        <p>City: <%= @order.city %></p>
+        <p>State: <%= @order.state %></p>
+        <p>Zip: <%= @order.zip %></p>
+        <p>Phone: <%= @order.phone %></p>
+        <p>Email: <%= @order.email %></p>
+        <h3>Credit Card Info</h3>
+        <p>Card Number: <%= @credit_card_number %></p>
+        <p>Expiration: <%= @order.expiration %></p>
+        <p>CVC: <%= @order.cvc %></p>
+      </div>
+
+      <br>
+      <br>
+      <% if @billing_address %>
+        <div>
+          <h2>Billing Address</h2>
+          <p>First Name: <%= @order.first_name %></p>
+          <p>Last Name: <%= @order.last_name %></p>
+          <p>Company Name: <%= @order.company_name %></p>
+          <p>Address: <%= @order.address %></p>
+          <p>City: <%= @order.city %></p>
+          <p>State: <%= @order.state %></p>
+          <p>Zip: <%= @order.zip %></p>
+          <p>Phone: <%= @order.phone %></p>
+          <p>Email: <%= @order.email %></p>
+          <h3>Credit Card Info</h3>
+          <p>Card Number: <%= @credit_card_number %></p>
+          <p>Expiration: <%= @order.expiration %></p>
+          <p>CVC: <%= @order.cvc %></p>
+        </div>
+      <% else %>
+        <h2>Use mailing address for billing</h2>
+      <% end %>
+      <br>
+      <br>
+
+      <div>
+        <h2>Products</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Quantity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @products.each do |product| %>
+            <tr>
+              <td><%= product.name %></td>
+              <td><%= @quantities[product.sku] %></td>
+            </tr>
+            <% end %>
+            <tr>
+              <tr>
+                <td><h5>Total</h5></td>
+                <td><h5><%= @frd_total %></h5> <small>includes shipping</small></td>
+              </tr>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+  </body>
+</html>

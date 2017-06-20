@@ -6,8 +6,12 @@ Rails.application.routes.draw do
   resources :orders, only: [:create]
   resources :billing_addresses, only: [:create]
 
-  get 'cart', to: 'cart#products'
+  # checkout 
   get 'checkout', to: 'checkout#index'
+  post 'checkout', to: 'checkout#checkout'
+
+  # cart
+  get 'cart', to: 'cart#products'
   get 'thankyou', to: 'cart#thankyou'
   post 'cart_update', to: 'cart#cart_update'
   post 'remove_product', to: 'cart#remove_product'

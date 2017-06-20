@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
   end
 
   def total
-    products = @products.map do |product|
+    products = products_from_cookies.map do |product|
       (site_cookies[product.sku.to_sym] || 1) * product.price
     end
     products.sum

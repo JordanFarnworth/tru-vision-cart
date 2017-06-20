@@ -20,7 +20,7 @@
         <%= f.text_field :city %>
         <%= f.text_field :state %>
         <%= f.text_field :zip, label: 'Zip Code' %>
-        <%= f.text_field :phone, label: 'Phone Number' %>
+        <%= f.telephone_field :phone, label: 'Phone Number' %>
         <%= f.email_field :email, label: 'Email Address' %>
       <% end %>
     </div>
@@ -108,24 +108,14 @@
   <div class="row">
     <div class="col-md-8">
       <h5>Credit Card Information</h5>
-      <%= bootstrap_form_for(@order) do |f| %>
-        <%= f.text_field :card_number, label: 'Credit Card Number' %>
-        <div class="row">
-          <div class="col-md-6">
-            <%= f.text_field :expiration, label: 'Expiration(MM/YY)' %>
-          </div>
-          <div class="col-md-6 pull-right">
-            <%= f.text_field :cvc, label: 'CVC' %>
-          </div>
-        </div>
-      <% end %>
+      <div class="card-js"></div>
     </div>
   </div>
 
   <div class="row">
     <div class="col-md-12">
       <br>
-      <button class="btn btn-default" type="button" name="button">Place your order!</button>
+      <button id="place-order" class="btn btn-default" type="button" name="button">Place your order!</button>
     </div>
   </div>
 </div>
