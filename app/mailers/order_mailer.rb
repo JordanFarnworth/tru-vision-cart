@@ -11,6 +11,6 @@ class OrderMailer < ApplicationMailer
     @frd_total = frd_total
     @coupon_code = coupon_code
 
-    mail(to: 'test@gmail.com', subject: 'Order Confirmation - Tru-Vision')
+    mail(to: 'farnworth.jordan@gmail.com', subject: 'Order Confirmation - Tru-Vision')
   end
 end
