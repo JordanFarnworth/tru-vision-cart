@@ -22,6 +22,7 @@ gem 'lodash-rails'
 gem 'bootstrap_form'
 gem 'card-js-rails', '~> 1.0'
 gem 'delayed_job_active_record'
+gem 'sendgrid-ruby'
 
 gem 'sprockets-es6'
 gem 'babel-transpiler', git: 'https://github.com/babel/ruby-babel-transpiler'
