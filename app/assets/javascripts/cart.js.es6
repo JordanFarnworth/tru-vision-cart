@@ -44,12 +44,16 @@ $(document).ready(() => {
             sku: sku,
             quantity: quantity,
             authenticity_token: $('#authenticity_token').val(),
-            success: (resp) => {
-              location.reload();
-            }
           }
         }
-      )
+      ).then(function fulfillHandler(data) {
+          location.reload()
+        },
+        function rejectHandler(jqXHR, textStatus, errorThrown) {
+          console.log(`${errorThrown}`)
+        }).catch((data) => {
+          console.log("something broke in cart_update in cart.js ajx")
+      })
     })
     // quantity selector
 
