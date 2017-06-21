@@ -20,6 +20,12 @@ class ApplicationController < ActionController::Base
     products
   end
 
+  def clear_products_from_cart
+    products_from_cookies.each do |product|
+      cookies.delete product.sku.to_sym
+    end
+  end
+
   def total
     products = products_from_cookies.map do |product|
       (site_cookies[product.sku.to_sym] || 1) * product.price
@@ -27,6 +33,7 @@ class ApplicationController < ActionController::Base
     products.sum
   end
   helper_method :total
+
 
   def quantity_select(quantity, n, product)
     "<option data-sku='#{product.sku}' #{selected='selected' if n == quantity} >#{n}</option>".html_safe

@@ -1,6 +1,11 @@
 class CheckoutController < ApplicationController
   protect_from_forgery with: :exception
   include ActionView::Helpers::NumberHelper
+  before_action :prepare_checkout, only: :checkout
+  before_action :prepare_order_params, only: :checkout
+  before_action :prepre_billing_address_params, only: :checkout
+
+  CARD_ATTRIBUTES = ['card_number', 'expiry', 'cvc']
 
   def index
     @order = Order.new
@@ -9,48 +14,81 @@ class CheckoutController < ApplicationController
   end
 
   def checkout
-    new_order_params = {}
-    new_billing_address_params = {}
-    errors = []
-    order_params.each do |key, value|
-      if ['card_number', 'expiry', 'cvc'].include? key
-        new_order_params['expiration'] = value if key == 'expiry'
-        new_order_params[key] = value unless key == 'expiry'
-      else
-        new_key = key.split('order_')[1]
-        new_order_params[new_key] = value
-      end
+    @order = Order.create @new_order_params
+    if @new_billing_address_params.any?
+      @new_billing_address_params['order_id'] = @order.id
+      @custom_billing_address = BillingAddress.create @new_billing_address_params
     end
-    order = Order.create new_order_params
-    if order.errors.any?
-      errors << order.errors.full_messages
-    end
-    if (billing_params rescue false)
-      billing_params.each do |key, value|
-        new_key = key.split('billing_address_')[1]
-        new_billing_address_params[new_key] = value
-      end
-      ba = BillingAddress.create new_billing_address_params
-      ba.order_id = order.id
-      ba.save
-      if ba.errors.any?
-        errors << ba.errors.full_messages
-      end
-    end
-
-    if errors.any?
-      render json: {errors: errors.flatten}, status: :bad_request
+    if check_for_errors
+      render json: {errors: @errors.flatten}, status: :bad_request
     else
-      quantities = products_from_cookies.map do |p|
-        {p.sku => product_quantity(p.sku)}
-      end.reduce({}, :merge)
-      frd_total = number_to_currency(total + 11.99)
-      OrderMailer.order_email(order, ba ? ba : nil, new_order_params['card_number'], products_from_cookies, quantities, number_to_currency(total), frd_total).deliver_later
+      send_order_email
+      clear_products_from_cart
       render json: {path: thankyou_path}, status: :ok
     end
   end
 
   private
+
+  def prepare_order_params
+    @coupon_code = params['order']['coupon_code']
+    order_params.each do |key, value|
+      if CARD_ATTRIBUTES.include? key
+        @new_order_params['expiration'] = value if key == 'expiry'
+        @new_order_params[key] = value unless key == 'expiry'
+      else
+        new_key = key.split('order_')[1]
+        @new_order_params[new_key] = value
+      end
+    end
+    @card_number = @new_order_params['card_number']
+  end
+
+  def prepre_billing_address_params
+    unless (billing_params.nil?)
+      billing_params.each do |key, value|
+        new_key = key.split('billing_address_')[1]
+        @new_billing_address_params[new_key] = value
+      end
+    end
+  end
+
+  def check_for_errors
+    if @order.errors.any?
+      @errors << @order.errors.full_messages.map {|e| "Order #{e}"}
+    end
+    if @custom_billing_address && @custom_billing_address.errors.any?
+      @errors << @custom_billing_address.errors.full_messages.map {|e| "Billing Address #{e}"}
+    end
+    @errors.any?
+  end
+
+  def prepare_checkout
+    @new_order_params = {}
+    @new_billing_address_params = {}
+    @custom_billing_address = nil
+    @errors = []
+    @products ||= products_from_cookies
+    @quantities = @products.map do |p|
+      {p.sku => product_quantity(p.sku)}
+    end.reduce({}, :merge)
+    @total = number_to_currency(total)
+    @frd_total = number_to_currency(total + 11.99)
+  end
+
+
+  def send_order_email
+    OrderMailer.order_email(
+      @order,
+      @custom_billing_address,
+      @card_number,
+      @products,
+      @quantities,
+      @total,
+      @frd_total,
+      @coupon_code
+    ).deliver_later
+  end
 
   def order_params
     params.require(:order).permit(

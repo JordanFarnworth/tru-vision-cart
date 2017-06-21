@@ -43,7 +43,10 @@ $(document).ready(() => {
           data: {
             sku: sku,
             quantity: quantity,
-            authenticity_token: $('#authenticity_token').val()
+            authenticity_token: $('#authenticity_token').val(),
+            success: (resp) => {
+              location.reload();
+            }
           }
         }
       )

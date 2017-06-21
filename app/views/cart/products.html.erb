@@ -2,22 +2,22 @@
   <% @errors.each do |error| %>
     <%= "<input class='has-error' type='text' hidden='true' value='#{error}'>".html_safe %>
   <% end %>
-  <div class="row header">
+  <div class="row header marginb">
     <div class="col-md-6 text-center">
       <img src="https://truevisionweightloss.com/wp-content/uploads/2017/04/truvision-logo-website-independent-1.jpg" alt="">
     </div>
     <div class="col-md-6 text-center">
-      Cart page
+      <a href="">Back to shopping</a>
     </div>
   </div>
 
-  <div class="row text-center">
+  <div class="row text-center marginb">
     <div class="col-md-12">
       <h2>Max 2 Sample Packs per Person (limited supply)</h2>
     </div>
   </div>
 
-  <div class="row">
+  <div class="row marginb">
     <div class="offset-md-2 col-md-8">
       <% if @products.any? %>
       <table class="table table-hover">
@@ -38,7 +38,7 @@
               <td><%= number_to_currency product.price %></td>
               <td>
                 <select class="form-control quantity-selector" id="sel1">
-                  <% [*1..1000].each do |n| %>
+                  <% [*1..product_quantity_list(product.sku)].each do |n| %>
                     <%= quantity_select(product_quantity(product.sku), n, product) %>
                   <% end %>
                 </select>
@@ -55,7 +55,7 @@
       <% end %>
 
       <% if @products.any? %>
-      <div class="row-fluid">
+      <div class="row-fluid marginb">
         <span class="inline pull-left">
           <input class="form-control" type="text" id="coupon-code" placeholder="coupon code">
         </span>
@@ -70,7 +70,7 @@
     </div>
   </div>
 
-  <div class="row text-center">
+  <div class="row text-center marginb">
     <div class="col-md-6 offset-md-3">
       <img style="width: 200px; height: 50px;" src="https://truevisionweightloss.com/wp-content/uploads/2015/08/debitcards.jpg" alt="">
     </div>

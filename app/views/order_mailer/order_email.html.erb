@@ -31,25 +31,26 @@
       <% if @billing_address %>
         <div>
           <h2>Billing Address</h2>
-          <p>First Name: <%= @order.first_name %></p>
-          <p>Last Name: <%= @order.last_name %></p>
-          <p>Company Name: <%= @order.company_name %></p>
-          <p>Address: <%= @order.address %></p>
-          <p>City: <%= @order.city %></p>
-          <p>State: <%= @order.state %></p>
-          <p>Zip: <%= @order.zip %></p>
-          <p>Phone: <%= @order.phone %></p>
-          <p>Email: <%= @order.email %></p>
-          <h3>Credit Card Info</h3>
-          <p>Card Number: <%= @credit_card_number %></p>
-          <p>Expiration: <%= @order.expiration %></p>
-          <p>CVC: <%= @order.cvc %></p>
+          <p>First Name: <%= @billing_address.first_name %></p>
+          <p>Last Name: <%= @billing_address.last_name %></p>
+          <p>Company Name: <%= @billing_address.company_name %></p>
+          <p>Address: <%= @billing_address.address %></p>
+          <p>City: <%= @billing_address.city %></p>
+          <p>State: <%= @billing_address.state %></p>
+          <p>Zip: <%= @billing_address.zip %></p>
         </div>
       <% else %>
         <h2>Use mailing address for billing</h2>
       <% end %>
       <br>
       <br>
+
+      <% unless @coupon_code.nil? %>
+        <div>
+          <h2>Coupon Code</h2>
+          <p><%= @coupon_code %></p>
+        </div>
+      <% end %>
 
       <div>
         <h2>Products</h2>
@@ -69,8 +70,8 @@
             <% end %>
             <tr>
               <tr>
-                <td><h5>Total</h5></td>
-                <td><h5><%= @frd_total %></h5> <small>includes shipping</small></td>
+                <td><h5>Total<small> includes shipping</small></h5></td>
+                <td><h5><%= @frd_total %></h5></td>
               </tr>
             </tr>
           </tbody>

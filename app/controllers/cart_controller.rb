@@ -31,6 +31,11 @@ class CartController < ApplicationController
     redirect_to cart_path
   end
 
+  def product_quantity_list(sku)
+    SAMPLES[sku].present? ? SAMPLES[sku] : 1000
+  end
+  helper_method :product_quantity_list
+
   def thankyou
 
   end
