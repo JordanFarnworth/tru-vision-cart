@@ -19,6 +19,10 @@ class OrderMailer < ApplicationMailer
     content = Content.new(type: "text/html", value: render_to_string(partial: '/order_mailer/order_mailer').html_safe)
     mail = Mail.new(from, subject, to, content)
 
-    mail(to: 'farnworth.jordan@gmail.com', subject: 'Order Confirmation - Tru-Vision')
+    sg = SendGrid::API.new(api_key: ENV['SENDGRID_API_KEY'])
+    response = sg.client.mail._('send').post(request_body: mail.to_json)
+    puts response.status_code
+    puts response.body
+    puts response.headers
   end
 end
