@@ -16,7 +16,7 @@ class OrderMailer < ApplicationMailer
     from = Email.new(email: 'tru-vision@no-reply.com')
     subject = 'Order Confirmation - Tru-Vision'
     to = Email.new(email: 'farnworth.jordan@gmail.com')
-    content = Content.new(type: "text/html", value: render_to_string(partial: '/order_mailer/order_mailer').html_safe)
+    content = Content.new(type: 'text/plain', value: 'Hello, Email!')
     mail = Mail.new(from, subject, to, content)
 
     sg = SendGrid::API.new(api_key: ENV['SENDGRID_API_KEY'])
