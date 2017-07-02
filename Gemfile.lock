@@ -81,6 +81,10 @@ GEM
     delayed_job_active_record (4.1.1)
       activerecord (>= 3.0, < 5.1)
       delayed_job (>= 3.0, < 5)
+    dotenv (2.2.0)
+    dotenv-rails (2.2.0)
+      dotenv (= 2.2.0)
+      railties (>= 3.2, < 5.1)
     erubis (2.7.0)
     eventmachine (1.0.9.1)
     execjs (2.7.0)
@@ -243,6 +247,7 @@ DEPENDENCIES
   card-js-rails (~> 1.0)
   coffee-rails (~> 4.2)
   delayed_job_active_record
+  dotenv-rails (~> 2.1, >= 2.1.1)
   font-awesome-sass (~> 4.7.0)
   jbuilder (~> 2.5)
   jquery-rails
