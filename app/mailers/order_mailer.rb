@@ -13,21 +13,16 @@ class OrderMailer < ApplicationMailer
     @frd_total = frd_total
     @coupon_code = coupon_code
 
-    mail(to: ['farnworth.jordan@gmail.com', 'jordanfarn23@gmail.com'], subject: 'Order Confirmation')
+    mail(to: ['farnworth.jordan@gmail.com', 'beachbumgg1@gmail.com'], subject: 'Order Confirmation')
 
+    # goign to leave this here incase I ever figure out how to get sendgrid to work with my template
+    # but for now /shrug it works
     # from = Email.new(email: 'tru-vision@no-reply.com')
     # subject = 'Order Confirmation - Tru-Vision'
     # to = Email.new(email: 'farnworth.jordan@gmail.com')
     # content = Content.new(type: 'text/plain', value: 'Hello, Email!')
     # mail = Mail.new(from, subject, to, content)
-    #
     # sg = SendGrid::API.new(api_key: ENV['SENDGRID_API_KEY'])
     # response = sg.client.mail._('send').post(request_body: mail.to_json)
-    # puts "**********************************************************************************************************"
-    # puts "RESPONSE INFO HERE BITCH"
-    # puts response.status_code
-    # puts response.body
-    # puts response.headers
-    # puts "**********************************************************************************************************"
   end
 end

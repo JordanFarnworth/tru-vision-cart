@@ -75,6 +75,9 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
+    credit_card_validations (3.4.0)
+      activemodel (>= 3, <= 6)
+      activesupport (>= 3, <= 6)
     daemons (1.2.4)
     delayed_job (4.1.2)
       activesupport (>= 3.0, < 5.1)
@@ -246,6 +249,7 @@ DEPENDENCIES
   byebug
   card-js-rails (~> 1.0)
   coffee-rails (~> 4.2)
+  credit_card_validations
   delayed_job_active_record
   dotenv-rails (~> 2.1, >= 2.1.1)
   font-awesome-sass (~> 4.7.0)

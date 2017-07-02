@@ -15,7 +15,7 @@
       <div class="checkbox">
         <label>Billing details</label>
       </div>
-      <%= bootstrap_form_for(@order) do |f| %>
+      <%= bootstrap_form_for(@order, label_errors: true, inline_errors: true) do |f| %>
         <%= f.text_field :first_name %>
         <%= f.text_field :last_name %>
         <%= f.text_field :company_name %>
@@ -33,7 +33,7 @@
         <label><input type="checkbox" id="billing-address" value=""> Ship to a different address?</label>
       </div>
       <div style="hidden" class="billing_address">
-        <%= bootstrap_form_for(@billing_address) do |f| %>
+        <%= bootstrap_form_for(@billing_address, label_errors: true, inline_errors: true) do |f| %>
           <%= f.text_field :first_name %>
           <%= f.text_field :last_name %>
           <%= f.text_field :company_name %>

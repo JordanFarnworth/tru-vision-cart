@@ -37,3 +37,7 @@
 .checkout-btn:hover {
   cursor:pointer;
 }
+
+label.required:after {
+  content:" *";
+}
