@@ -69,7 +69,14 @@ $(document).ready(() => {
             authenticity_token: $('#authenticity_token').val()
           }
         }
-      )
+      ).then(function fulfillHandler(data) {
+          location.reload()
+        },
+        function rejectHandler(jqXHR, textStatus, errorThrown) {
+          console.log(`${errorThrown}`)
+        }).catch((data) => {
+          console.log("something broke in cart_update in cart.js ajx")
+      })
     })
     // remove product
   }
