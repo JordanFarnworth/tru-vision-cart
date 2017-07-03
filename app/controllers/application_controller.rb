@@ -2,7 +2,6 @@ require 'ostruct'
 
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
-  SKUS = ["TRUV-Control-30Day-Preferred", "TRUV-Control-30Day-Retail", "TRUV-Control-30Day-Wholesale", "TRUV-Control-7Day", "TRUV-ReNU", "TRUV-Wholesale-Enrollment"].freeze
 
   def site_cookies
     cookies.permanent.signed
@@ -13,11 +12,9 @@ class ApplicationController < ActionController::Base
   end
 
   def products_from_cookies
-    products = []
-    SKUS.each do |sku|
-      products << Product.find_by(sku: sku) if site_cookies[sku.to_sym].present?
-    end
-    products
+    sku_codes.map do |sku|
+      site_cookies[sku.to_sym].present? ? Product.find_by(sku: sku) : nil
+    end.compact
   end
 
   def clear_products_from_cart
@@ -44,4 +41,10 @@ class ApplicationController < ActionController::Base
     site_cookies[sku.to_sym]
   end
   helper_method :product_quantity
+
+  private
+
+  def sku_codes
+    @skus ||= Product.all.pluck :sku
+  end
 end
