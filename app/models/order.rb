@@ -1,7 +1,7 @@
 class Order < ApplicationRecord
   before_create :filter_cc
 
-  validates_presence_of :first_name, :last_name, :address, :city, :state, :zip, :phone, :email, :expiration, :cvc, :expiration
+  validates_presence_of :first_name, :last_name, :address, :city, :state, :zip, :phone, :email, :expiration, :cvc, :expiration, :country
 
   if Rails.env == 'development'
     validates :card_number, presence: true

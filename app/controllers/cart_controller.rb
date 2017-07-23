@@ -1,11 +1,6 @@
 require 'addressable/uri'
 class CartController < ApplicationController
   protect_from_forgery with: :exception
-  SAMPLES = {
-      'TRUV-Control-30Day-Preferred' => 1,
-      'TRUV-Control-30Day-Wholesale' => 1,
-      'TRUV-Control-7Day' => 2
-    }
   COMBO_PACK = {
     'TRUV-Control-30Day-Wholesale' => 'TRUV-Wholesale-Enrollment'
   }
@@ -32,7 +27,7 @@ class CartController < ApplicationController
   end
 
   def product_quantity_list(sku)
-    SAMPLES[sku].present? ? SAMPLES[sku] : 1000
+    sample_pack_skus[sku].present? ? sample_pack_skus[sku] : 1000
   end
   helper_method :product_quantity_list
 
@@ -43,9 +38,9 @@ class CartController < ApplicationController
   private
 
   def check_product_quantity(sku)
-    if SAMPLES[sku]
-      if ((site_cookies[sku.to_sym] + 1) rescue 1) > SAMPLES[sku]
-        @errors << "#{Product.find_by(sku: sku).name} can only be added to the cart #{SAMPLES[sku]} time(s) due to limited supply."
+    if sample_pack_skus[sku]
+      if ((site_cookies[sku.to_sym] + 1) rescue 1) > sample_pack_skus[sku]
+        @errors << "#{Product.find_by(sku: sku).name} can only be added to the cart #{sample_pack_skus[sku]} time(s) due to limited supply."
       end
     end
   end

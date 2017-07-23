@@ -13,6 +13,23 @@ class CheckoutController < ApplicationController
     @products = products_from_cookies
   end
 
+  def sales_tax(zip=nil, *args)
+    @zip = zip || params[:zip]
+    @country = COUNTRY_MAP[params[:country]]
+    client = Taxjar::Client.new(api_key: ENV['TAX_API_KEY'])
+    tax_rate = client.rates_for_location(@zip, country: @country).combined_rate rescue false
+    tax = (Integer((total * tax_rate) * 100) / Float(100)) if tax_rate
+    respond_to do |format|
+      format.json do
+        if tax_rate
+          render json: {new_total: total_with_shipping_and_tax(tax_rate), tax_amount: tax}, status: :ok
+        else
+          render json: {invalid: 'invalid zip'}, status: :bad_request
+        end
+      end
+    end
+  end
+
   def checkout
     @order = Order.create @new_order_params
     if @new_billing_address_params.any?
@@ -60,6 +77,16 @@ class CheckoutController < ApplicationController
     if @custom_billing_address && @custom_billing_address.errors.any?
       @errors << @custom_billing_address.errors.full_messages.map {|e| "Billing Address #{e}"}
     end
+    if billing_params.has_key? :billing_address_country
+      country = COUNTRY_MAP[billing_params[:billing_address_country]]
+      zip = billing_params[:billing_address_zip]
+      @errors << 'Invalid billing address zip code' unless ValidatesZipcode.valid?(zip, country)
+    end
+    if order_params.has_key? :order_country
+      country = COUNTRY_MAP[order_params[:order_country]]
+      zip = order_params[:order_zip]
+      @errors << 'Invalid billing details zip code' unless ValidatesZipcode.valid?(zip, country)
+    end
     @errors.any?
   end
 
@@ -73,7 +100,8 @@ class CheckoutController < ApplicationController
       {p.sku => product_quantity(p.sku)}
     end.reduce({}, :merge)
     @total = number_to_currency(total)
-    @frd_total = number_to_currency(total + 11.99)
+    tax_rate = calc_tax_rate(params)
+    @frd_total = total_with_shipping_and_tax(tax_rate)
   end
 
 
@@ -100,6 +128,7 @@ class CheckoutController < ApplicationController
     :order_last_name,
     :order_phone,
     :order_state,
+    :order_country,
     :order_zip,
     :card_number,
     :cvc,
@@ -111,6 +140,7 @@ class CheckoutController < ApplicationController
     params.require(:billing_address).permit(
     :billing_address_address,
     :billing_address_city,
+    :billing_address_country,
     :billing_address_company_name,
     :billing_address_first_name,
     :billing_address_last_name,

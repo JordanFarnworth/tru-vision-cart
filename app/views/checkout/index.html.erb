@@ -8,10 +8,28 @@
 
     </div>
   </div>
+
+  <div class="row">
+    <div class="col-md-4 text-center">
+      <h5>Fast Standard Shipping</h5>
+      <br>
+      <i class="fa fa-truck fa-2x" ></i>
+      3 - 7 Day Shipping (USA)
+    </div>
+    <div class="col-md-4 text-center">
+      <h5>Peace of Mind</h5>
+      <img style="height: 75px; width: 100px;" src="https://truevisionweightloss.com/wp-content/uploads/2017/04/041912-nortontrust-100272248-orig.jpg" alt="">
+    </div>
+    <div class="col-md-4 text-center">
+      <h5>Always the Best Price</h5>
+      <img style="height: 75px; width: 100px;" src="https://truevisionweightloss.com/wp-content/uploads/2017/04/lowest-price-e1447073917988.png" alt="">
+    </div>
+  </div>
+
   <br>
 
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
       <div class="checkbox">
         <label>Billing details</label>
       </div>
@@ -20,14 +38,15 @@
         <%= f.text_field :last_name %>
         <%= f.text_field :company_name %>
         <%= f.text_field :address %>
-        <%= f.text_field :city %>
+        <%= f.select :country, countries %>
         <%= f.text_field :state %>
+        <%= f.text_field :city %>
         <%= f.text_field :zip, label: 'Zip Code' %>
         <%= f.telephone_field :phone, label: 'Phone Number' %>
         <%= f.email_field :email, label: 'Email Address' %>
       <% end %>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
       <div class="checkbox">
         <input type="text" id="coupon-code" value=""></input>
         <label><input type="checkbox" id="billing-address" value=""> Ship to a different address?</label>
@@ -40,33 +59,9 @@
           <%= f.text_field :address %>
           <%= f.text_field :city %>
           <%= f.text_field :state %>
+          <%= f.select :country, countries %>
           <%= f.text_field :zip, label: 'Zip Code' %>
         <% end %>
-      </div>
-    </div>
-    <div class="col-md-4 text-center">
-      <div class="row-fluid">
-        <h5>Fast Standard Shipping</h5>
-        <br>
-        <i class="fa fa-truck fa-2x" ></i>
-        3 - 7 Day Shipping (USA)
-      </div>
-      <br>
-      <br>
-
-      <div class="row-fluid">
-        <h5>Peace of Mind</h5>
-        <img style="height: 75px; width: 100px;" src="https://truevisionweightloss.com/wp-content/uploads/2017/04/041912-nortontrust-100272248-orig.jpg" alt="">
-        <br>
-        <br>
-        <img style="height: 75px; width: 100px;" src="https://truevisionweightloss.com/wp-content/uploads/2017/04/lowest-price-e1447073917988.png" alt="">
-      </div>
-      <br>
-      <br>
-
-      <div class="row-fluid">
-        <h5>Need Help?</h5>
-        <p>Just contact us 24/7 and we will respond quickly</p>
       </div>
     </div>
   </div>
@@ -85,8 +80,8 @@
         <tbody>
           <% @products.each do |product| %>
           <tr>
-            <td><%= product.name %></td>
-            <td><%= product.price * product_quantity(product.sku) %></td>
+            <td><%= product.name + ' x' + product_quantity(product.sku).to_s %></td>
+            <td><%= number_to_currency(product.price * product_quantity(product.sku)) %></td>
           </tr>
           <% end %>
           <tr>
@@ -95,12 +90,16 @@
           </tr>
           <tr>
             <td><h5>Shipping</h5></td>
-            <td><h5>USA Shipping: $11.99</h5></td>
+            <td><h5><%= calculate_shipping %></h5></td>
+          </tr>
+          <tr>
+            <td><h5 id="sales-tax-label"></h5></td>
+            <td><h5 id="sales-tax-number">Enter a valid ZIP code to see estimated sales tax</h5></td>
           </tr>
           <tr>
             <tr>
               <td><h5>Total</h5></td>
-              <td><h5><%= number_to_currency(total + 11.99) %></h5></td>
+              <td><h5 id="sales-tax-total"><%= number_to_currency(total + calculate_shipping(:int)) %></h5></td>
             </tr>
           </tr>
         </tbody>
@@ -116,7 +115,7 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row marginb">
     <div class="col-md-12">
       <br>
       <button id="place-order" class="btn btn-default" type="button" name="button">Place your order!</button>

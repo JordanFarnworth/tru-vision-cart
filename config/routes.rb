@@ -6,9 +6,10 @@ Rails.application.routes.draw do
   resources :orders, only: [:create]
   resources :billing_addresses, only: [:create]
 
-  # checkout 
+  # checkout
   get 'checkout', to: 'checkout#index'
   post 'checkout', to: 'checkout#checkout'
+  get 'sales_tax', to: 'checkout#sales_tax'
 
   # cart
   get 'cart', to: 'cart#products'

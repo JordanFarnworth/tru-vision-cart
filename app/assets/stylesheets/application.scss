@@ -21,7 +21,7 @@
 @import 'rails_bootstrap_forms';
 @import "card-js";
 
-.fa-minus-circle {
+.fa-times {
   color: red;
 }
 
@@ -40,4 +40,12 @@
 
 label.required:after {
   content:" *";
+}
+
+.table-hover {
+  border: 1px solid #eceeef !important;
+}
+
+#max-sample {
+  color: red !important;
 }

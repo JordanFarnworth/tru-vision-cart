@@ -1,6 +1,9 @@
+
 $(document).ready(() => {
   if ($('#new_order').length > 0) {
     // checkout page
+
+    window.errors = []
 
     const getSearchParameters = () => {
       var prmstr = window.location.search.substr(1);
@@ -16,6 +19,62 @@ $(document).ready(() => {
         }
         return params;
     }
+
+    // sales tax
+    const updateSalesTax = () => {
+      $('#sales-tax-label').html('<i class="fa fa-spinner fa-pulse fa-fw"></i>')
+      $('#sales-tax').html('<i class="fa fa-spinner fa-pulse fa-fw"></i>')
+      const country = $('#billing_address_country').is(":visible") ? $('#billing_address_country').val() : $('#order_country').val();
+      $.ajax(
+        {
+          url: `/sales_tax?zip=${$('#order_zip').val()}&country=${country}`,
+          type: 'get'
+        }
+      ).then(function fulfillHandler(data) {
+        $('#sales-tax-label').html('Estimated Tax')
+        $('#sales-tax-number').html(`$${data.tax_amount.toFixed(2)}`)
+        $('#sales-tax-total').html(`$${data.new_total.toFixed(2)}`)
+        },
+        function rejectHandler(jqXHR, textStatus, errorThrown) {
+          if(jqXHR.responseJSON.errors.length){
+            jqXHR.responseJSON.errors.forEach((error) => {
+              $('#errors').show()
+              $('#errors').append(`<h4>${error}</h4>`);
+            })
+          } else {
+            window.errors.push('Invalid zip for selected country')
+            $('#sales-tax-label').html('invalid zip')
+            $('#sales-tax-number').html('invalid zip')
+          }
+        }).catch((data) => {
+          window.errors.push('Invalid zip for selected country')
+          $('#sales-tax-label').html('invalid zip')
+          $('#sales-tax-number').html('invalid zip')
+      })
+    }
+
+    $('#order_zip').change((event) => {
+      if($('#billing_address_zip').is(":visible")){
+        return;
+      }
+      updateSalesTax()
+    })
+
+    $('#billing_address_zip').change((event) => {
+      updateSalesTax()
+    })
+
+    $('#order_country').change((event) => {
+      if($('#billing_address_country').is(":visible")){
+        return;
+      }
+      updateSalesTax()
+    })
+
+    $('#billing_address_country').change((event) => {
+      updateSalesTax()
+    })
+    // sales tax
 
     const params = getSearchParameters();
     $('#coupon-code').hide();
@@ -70,27 +129,45 @@ $(document).ready(() => {
         }
         data.order.coupon_code = $('#coupon-code').val();
       })
+      data.order.order_country = $('#order_country').val()
+      if($('#billing_address_country').is(':visible')) {
+        data.billing_address.billing_address_country = $('#billing_address_country').val()
+      }
 
-      $.ajax(
-        {
-          url: '/checkout',
-          type: 'post',
-          data: data,
-          success: (resp) => {
-            window.location.href = resp.path
+      if(window.errors.length > 0) {
+        window.errors.forEach((error) => {
+          $('#errors').append(`<h4>${error}</h4>`);
+        })
+        // clear errors for next try
+        window.errors = []
+        $('#errors').show()
+      }
+      if(window.errors.length < 1) {
+        $.ajax(
+          {
+            url: '/checkout',
+            type: 'post',
+            data: data,
+            success: (resp) => {
+              window.location.href = resp.path
+            }
           }
-        }
-      ).then(function fulfillHandler(data) {
-          window.location.href = resp.path
-        },
-        function rejectHandler(jqXHR, textStatus, errorThrown) {
-          jqXHR.responseJSON.errors.forEach((error) => {
-            $('#errors').show()
-            $('#errors').append(`<h4>${error}</h4>`);
-          })
-        }).catch((data) => {
-          console.log("something broke in checkout ajx")
-      })
+        ).then(function fulfillHandler(data) {
+            window.location.href = resp.path
+          },
+          function rejectHandler(jqXHR, textStatus, errorThrown) {
+            if(jqXHR.responseJSON.errors.length){
+              jqXHR.responseJSON.errors.forEach((error) => {
+                $('#errors').show()
+                $('#errors').append(`<h4>${error}</h4>`);
+              })
+            } else {
+
+            }
+          }).catch((data) => {
+            console.log("something broke in checkout ajx")
+        })
+      }
     })
 
   // end checkout page
