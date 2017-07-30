@@ -31,6 +31,12 @@ class CartController < ApplicationController
   end
   helper_method :product_quantity_list
 
+  def asterisk_if_sample(sku)
+    return "" unless sample_pack_skus.map {|k, v| k}.include? sku
+    " *".html_safe
+  end
+  helper_method :asterisk_if_sample
+
   def thankyou
 
   end

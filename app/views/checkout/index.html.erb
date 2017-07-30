@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="row text-center">
+  <div class="row text-center header-margin">
     <div class="col-md-12">
       <h1>Secure Checkout</h1>
       <h5>Your Information is Safe with Encrypted Data Transfer</h5>
@@ -11,18 +11,13 @@
 
   <div class="row">
     <div class="col-md-4 text-center">
-      <h5>Fast Standard Shipping</h5>
-      <br>
-      <i class="fa fa-truck fa-2x" ></i>
-      3 - 7 Day Shipping (USA)
+      <img style="height: 90px; width: 90px;" src="https://cdn.shopify.com/s/files/1/0987/4058/files/fast-shipping-green_large.gif" alt="">
     </div>
     <div class="col-md-4 text-center">
-      <h5>Peace of Mind</h5>
-      <img style="height: 75px; width: 100px;" src="https://truevisionweightloss.com/wp-content/uploads/2017/04/041912-nortontrust-100272248-orig.jpg" alt="">
+      <img style="height: 90px; width: 140px;" src="https://truevisionweightloss.com/wp-content/uploads/2017/04/041912-nortontrust-100272248-orig.jpg" alt="">
     </div>
     <div class="col-md-4 text-center">
-      <h5>Always the Best Price</h5>
-      <img style="height: 75px; width: 100px;" src="https://truevisionweightloss.com/wp-content/uploads/2017/04/lowest-price-e1447073917988.png" alt="">
+      <img style="height: 100px; width: 120px;" src="https://www.eleventh.com.my/image/eleventh/image/data/best-price-guaranteed.jpg" alt="">
     </div>
   </div>
 
@@ -31,36 +26,48 @@
   <div class="row">
     <div class="col-md-6">
       <div class="checkbox">
-        <label>Billing details</label>
+        <h4>Billing details</h4>
       </div>
       <%= bootstrap_form_for(@order, label_errors: true, inline_errors: true) do |f| %>
-        <%= f.text_field :first_name %>
-        <%= f.text_field :last_name %>
-        <%= f.text_field :company_name %>
-        <%= f.text_field :address %>
-        <%= f.select :country, countries %>
-        <%= f.text_field :state %>
-        <%= f.text_field :city %>
-        <%= f.text_field :zip, label: 'Zip Code' %>
-        <%= f.telephone_field :phone, label: 'Phone Number' %>
-        <%= f.email_field :email, label: 'Email Address' %>
+        <div class="row form-inline form-group inline-block">
+          <div class="col-md-6 col-sm-6 col-xs-6">
+            <%= f.text_field :first_name, hide_label: true, placeholder: "First Name*", class: "name-input" %>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-6">
+            <%= f.text_field :last_name, hide_label: true, placeholder: "Last Name*", class: "name-input" %>
+          </div>
+        </div>
+        <%= f.text_field :company_name, hide_label: true, placeholder: "Company Name" %>
+        <%= f.text_field :address, hide_label: true, placeholder: "Address*" %>
+        <%= f.select :country, countries, hide_label: true, placeholder: "Country*" %>
+        <%= f.text_field :state, hide_label: true, placeholder: "State*" %>
+        <%= f.text_field :city, hide_label: true, placeholder: "City*" %>
+        <%= f.text_field :zip, hide_label: true, placeholder: "Zip Code*" %>
+        <%= f.telephone_field :phone, hide_label: true, placeholder: "Phone Number*" %>
+        <%= f.email_field :email, hide_label: true, placeholder: "Email Address*" %>
       <% end %>
     </div>
     <div class="col-md-6">
       <div class="checkbox">
         <input type="text" id="coupon-code" value=""></input>
-        <label><input type="checkbox" id="billing-address" value=""> Ship to a different address?</label>
+        <h4><input type="checkbox" id="billing-address" value=""> Shipping Details (If Different)</h4>
       </div>
       <div style="hidden" class="billing_address">
         <%= bootstrap_form_for(@billing_address, label_errors: true, inline_errors: true) do |f| %>
-          <%= f.text_field :first_name %>
-          <%= f.text_field :last_name %>
-          <%= f.text_field :company_name %>
-          <%= f.text_field :address %>
-          <%= f.text_field :city %>
-          <%= f.text_field :state %>
-          <%= f.select :country, countries %>
-          <%= f.text_field :zip, label: 'Zip Code' %>
+          <div class="row form-inline form-group inline-block">
+            <div class="col-md-6 col-sm-6 col-xs-6">
+              <%= f.text_field :first_name, hide_label: true, placeholder: "First Name*", class: "name-input" %>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6">
+              <%= f.text_field :last_name, hide_label: true, placeholder: "Last Name*", class: "name-input" %>
+            </div>
+          </div>
+          <%= f.text_field :company_name, hide_label: true, placeholder: "Company Name" %>
+          <%= f.text_field :address, hide_label: true, placeholder: "Address*" %>
+          <%= f.text_field :city, hide_label: true, placeholder: "City*" %>
+          <%= f.text_field :state, hide_label: true, placeholder: "State*" %>
+          <%= f.select :country, countries, hide_label: true, placeholder: "City*" %>
+          <%= f.text_field :zip, hide_label: true, placeholder: "Zip Code*" %>
         <% end %>
       </div>
     </div>
@@ -70,36 +77,36 @@
   <div class="row">
     <div class="col-md-8">
       <h5>Your Order</h5>
-      <table class="table">
+      <table class="table checkout-table">
         <thead>
           <tr>
             <th>Product</th>
-            <th>Total</th>
+            <th class="text-right">Total</th>
           </tr>
         </thead>
         <tbody>
           <% @products.each do |product| %>
           <tr>
             <td><%= product.name + ' x' + product_quantity(product.sku).to_s %></td>
-            <td><%= number_to_currency(product.price * product_quantity(product.sku)) %></td>
+            <td class="text-right"><%= number_to_currency(product.price * product_quantity(product.sku)) %></td>
           </tr>
           <% end %>
           <tr>
             <td><h5>Subtotal</h5></td>
-            <td><h5><%= number_to_currency total %></h5></td>
+            <td class="text-right"><h5><%= number_to_currency total %></h5></td>
           </tr>
           <tr>
             <td><h5>Shipping</h5></td>
-            <td><h5><%= calculate_shipping %></h5></td>
+            <td class="text-right"><h5><%= calculate_shipping %></h5></td>
           </tr>
           <tr>
             <td><h5 id="sales-tax-label"></h5></td>
-            <td><h5 id="sales-tax-number">Enter a valid ZIP code to see estimated sales tax</h5></td>
+            <td class="text-right"><h5 id="sales-tax-number">Enter a valid ZIP code to see estimated sales tax</h5></td>
           </tr>
           <tr>
             <tr>
               <td><h5>Total</h5></td>
-              <td><h5 id="sales-tax-total"><%= number_to_currency(total + calculate_shipping(:int)) %></h5></td>
+              <td class="text-right"><h5 id="sales-tax-total"><%= number_to_currency(total + calculate_shipping(:int)) %></h5></td>
             </tr>
           </tr>
         </tbody>

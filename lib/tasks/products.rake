@@ -4,7 +4,7 @@ namespace :products do
   task initialize: :environment do
     CSV.foreach(Rails.root.to_s + "/config/data/products.csv") do |row|
       next if row[0] == "SKU (Unique ID)"
-       product = Product.create(sku: row[0], name: row[1], price: row[2], description: row[3])
+       product = Product.create(sku: row[0], name: row[1], price: row[2], description: row[3], image_url: row[4])
        puts "Created product #{product.name}."
     end
     puts "Products initialized."
@@ -15,7 +15,7 @@ namespace :products do
     Product.destroy_all
     CSV.foreach(Rails.root.to_s + "/config/data/products.csv") do |row|
       next if row[0] == "SKU (Unique ID)"
-       product = Product.create(sku: row[0], name: row[1], price: row[2].to_f, description: row[3])
+       product = Product.create(sku: row[0], name: row[1], price: row[2].to_f, description: row[3], image_url: row[4])
        puts "Created product #{product.name}."
     end
     puts "Products updated."

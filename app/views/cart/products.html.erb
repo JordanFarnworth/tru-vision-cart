@@ -2,12 +2,12 @@
   <% @errors.each do |error| %>
     <%= "<input class='has-error' type='text' hidden='true' value='#{error}'>".html_safe %>
   <% end %>
-  <div class="row header marginb">
+  <div class="row header marginb header-margin">
     <div class="col-md-6 text-center">
       <img src="https://truevisionweightloss.com/wp-content/uploads/2017/04/truvision-logo-website-independent-1.jpg" alt="">
     </div>
     <div class="col-md-6 text-center">
-      <a href="http://truvisionnow.com/shop">Back to shopping</a>
+      <a href="http://truvisionnow.com/shop">Back to shopping >>></a>
     </div>
   </div>
 
@@ -19,17 +19,21 @@
         <thead>
           <tr>
             <th></th>
+            <th></th>
             <th>Product</th>
             <th>Price</th>
             <th>Quantity</th>
-            <th>Total</th>
+            <th class="text-right">Total</th>
           </tr>
         </thead>
         <tbody>
           <% @products.each do |product| %>
             <tr>
-              <td><i class="fa fa-times remove-product" data-sku="<%= product.sku %>" aria-hidden="true"></i></td>
-              <td><%= product.name %></td>
+              <td><i class="fa fa-times remove-product vert-aligned" data-sku="<%= product.sku %>" aria-hidden="true"></i></td>
+              <td>
+                <img class="product-cart-image" src="<%= product.image_url %>" alt="">
+              </td>
+              <td><%= product.name + asterisk_if_sample(product.sku) %></td>
               <td><%= number_to_currency product.price %></td>
               <td>
                 <select class="form-control quantity-selector" id="sel1">
@@ -38,15 +42,16 @@
                   <% end %>
                 </select>
               </td>
-              <td><%= number_to_currency(product.price * product_quantity(product.sku)) %></td>
+              <td class="text-right"><%= number_to_currency(product.price * product_quantity(product.sku)) %></td>
             </tr>
           <% end %>
           <tr>
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
             <td>Total</td>
-            <td><%= number_to_currency total %></td>
+            <td class="text-right"><%= number_to_currency total %></td>
           </tr>
           <tr>
             <td>
@@ -54,6 +59,7 @@
                 <input class="form-control" type="text" id="coupon-code" placeholder="coupon code">
               </span>
             </td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -68,7 +74,7 @@
           <h3>No selected products.</h3>
         </div>
       <% end %>
-      <p id="max-sample">Maximum of 2 Sample Packs per Person (due to limited supply)</p>
+      <p id="max-sample">*Maximum of 2 Sample Packs per Person (due to limited supply)</p>
     </div>
   </div>
 
@@ -79,7 +85,7 @@
   </div>
 
   <div class="row text-center">
-    <div class="col-md-6 offset-md-3">
+    <div class="offset-md-2 col-md-8">
       <p>TruVision Health offers a sampling program for people to try our products prior to making a commitment to purchase larger quantities. This takes the place of a traditional money back guarantee. We encourage all people to sample our products prior to making any commitments to purchase larger volumes of product. TruVISION will offer a 90% return policy on items returned in resalable condition within 30 days of purchase.</p>
     </div>
   </div>
