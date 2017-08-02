@@ -14,10 +14,10 @@
       <img style="height: 90px; width: 90px;" src="https://cdn.shopify.com/s/files/1/0987/4058/files/fast-shipping-green_large.gif" alt="">
     </div>
     <div class="col-md-4 text-center">
-      <img style="height: 90px; width: 140px;" src="https://truevisionweightloss.com/wp-content/uploads/2017/04/041912-nortontrust-100272248-orig.jpg" alt="">
+      <img style="height: 90px; width: 175px;" src="https://truevisionweightloss.com/wp-content/uploads/2017/04/041912-nortontrust-100272248-orig.jpg" alt="">
     </div>
     <div class="col-md-4 text-center">
-      <img style="height: 100px; width: 120px;" src="https://www.eleventh.com.my/image/eleventh/image/data/best-price-guaranteed.jpg" alt="">
+      <img style="height: 100px; width: 120px;" src="https://www.mobilityscootersdirect.com/media/wysiwyg/powest-prices.gif" alt="">
     </div>
   </div>
 
@@ -38,11 +38,12 @@
           </div>
         </div>
         <%= f.text_field :company_name, hide_label: true, placeholder: "Company Name" %>
-        <%= f.text_field :address, hide_label: true, placeholder: "Address*" %>
-        <%= f.select :country, countries, hide_label: true, placeholder: "Country*" %>
-        <%= f.text_field :state, hide_label: true, placeholder: "State*" %>
+        <%= f.text_field :address, hide_label: true, placeholder: "Address Line 1*" %>
+        <%= f.text_field :address_two, hide_label: true, placeholder: "Address Line 2" %>
         <%= f.text_field :city, hide_label: true, placeholder: "City*" %>
-        <%= f.text_field :zip, hide_label: true, placeholder: "Zip Code*" %>
+        <%= f.text_field :state, hide_label: true, placeholder: "State*" %>
+        <%= f.text_field :zip, hide_label: true, placeholder: "Zip / Postal Code*" %>
+        <%= f.select :country, countries, hide_label: true, placeholder: "Country*" %>
         <%= f.telephone_field :phone, hide_label: true, placeholder: "Phone Number*" %>
         <%= f.email_field :email, hide_label: true, placeholder: "Email Address*" %>
       <% end %>
@@ -63,11 +64,12 @@
             </div>
           </div>
           <%= f.text_field :company_name, hide_label: true, placeholder: "Company Name" %>
-          <%= f.text_field :address, hide_label: true, placeholder: "Address*" %>
+          <%= f.text_field :address, hide_label: true, placeholder: "Address Line 1*" %>
+          <%= f.text_field :address_two, hide_label: true, placeholder: "Address Line 2" %>
           <%= f.text_field :city, hide_label: true, placeholder: "City*" %>
           <%= f.text_field :state, hide_label: true, placeholder: "State*" %>
+          <%= f.text_field :zip, hide_label: true, placeholder: "Zip / Postal Code*" %>
           <%= f.select :country, countries, hide_label: true, placeholder: "City*" %>
-          <%= f.text_field :zip, hide_label: true, placeholder: "Zip Code*" %>
         <% end %>
       </div>
     </div>

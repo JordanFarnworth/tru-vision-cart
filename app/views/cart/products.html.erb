@@ -29,7 +29,9 @@
         <tbody>
           <% @products.each do |product| %>
             <tr>
-              <td><i class="fa fa-times remove-product vert-aligned" data-sku="<%= product.sku %>" aria-hidden="true"></i></td>
+              <td align="center">
+                <i class="fa fa-times remove-product vert-aligned" data-sku="<%= product.sku %>" aria-hidden="true"></i>
+              </td>
               <td>
                 <img class="product-cart-image" src="<%= product.image_url %>" alt="">
               </td>
@@ -42,7 +44,7 @@
                   <% end %>
                 </select>
               </td>
-              <td class="text-right"><%= number_to_currency(product.price * product_quantity(product.sku)) %></td>
+              <td class="text-right"><h5><%= number_to_currency(product.price * product_quantity(product.sku)) %></h5></td>
             </tr>
           <% end %>
           <tr>
@@ -51,20 +53,26 @@
             <td></td>
             <td></td>
             <td>Total</td>
-            <td class="text-right"><%= number_to_currency total %></td>
+            <td class="text-right">
+              <h5>
+                <%= number_to_currency total %>
+              </h5>
+            </td>
           </tr>
           <tr>
             <td>
               <span class="inline pull-left">
-                <input class="form-control" type="text" id="coupon-code" placeholder="coupon code">
+                <input class="form-control" type="text" id="coupon-code" placeholder="Coupon Code">
               </span>
+            </td>
+            <td>
+              <button class="btn btn-default apply-coupon" type="button" name="button">Apply Coupon</button>
             </td>
             <td></td>
             <td></td>
             <td></td>
-            <td></td>
             <td>
-              <a href="/checkout" id="checkout-button" class="btn btn-primary checkout-btn" name="button">Checkout</a>
+              <a href="/checkout" id="checkout-button" class="btn btn-primary checkout-btn" name="button">Proceed to Checkout</a>
             </td>
           </tr>
         </tbody>
