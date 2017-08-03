@@ -96,6 +96,9 @@ $(document).ready(() => {
         $('.billing_address').show()
       } else {
         $('.billing_address').hide()
+        setTimeout(() => {
+          updateSalesTax()
+        }, 50)
       }
     })
 
