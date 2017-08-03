@@ -7,23 +7,23 @@
       <img src="https://truevisionweightloss.com/wp-content/uploads/2017/04/truvision-logo-website-independent-1.jpg" alt="">
     </div>
     <div class="col-md-6 text-center">
-      <a href="http://truvisionnow.com/shop">Back to shopping >>></a>
+      <a href="http://truvisionnow.com/shop">Back to Shopping >>></a>
     </div>
   </div>
 
   <div class="row marginb">
     <div class="offset-md-2 col-md-8">
-      <h3>Cart</h3>
+      <h3>CART</h3>
       <% if @products.any? %>
       <table class="table table-hover">
         <thead>
           <tr>
             <th></th>
             <th></th>
-            <th>Product</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th class="text-right">Total</th>
+            <th>PRODUCT</th>
+            <th>PRICE</th>
+            <th>QUANTITY</th>
+            <th class="text-right">TOTAL</th>
           </tr>
         </thead>
         <tbody>
@@ -36,53 +36,87 @@
                 <img class="product-cart-image" src="<%= product.image_url %>" alt="">
               </td>
               <td><%= product.name + asterisk_if_sample(product.sku) %></td>
-              <td><%= number_to_currency product.price %></td>
+              <td class="price-td"><%= number_to_currency product.price %></td>
               <td>
-                <select class="form-control quantity-selector" id="sel1">
+                <select class="form-control quantity-selector special" id="sel1">
                   <% [*1..product_quantity_list(product.sku)].each do |n| %>
                     <%= quantity_select(product_quantity(product.sku), n, product) %>
                   <% end %>
                 </select>
               </td>
-              <td class="text-right"><h5><%= number_to_currency(product.price * product_quantity(product.sku)) %></h5></td>
+              <td class="price-td"><h5><%= number_to_currency(product.price * product_quantity(product.sku)) %></h5></td>
             </tr>
           <% end %>
+        </tbody>
+      </table>
+      <table class="table table-hover">
+        <thead hidden>
+          <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
           <tr>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
-            <td><h5>Total</h5></td>
-            <td class="text-right">
+            <td></td>
+            <td class="price-td">
               <h5>
+                Total &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                 <%= number_to_currency total %>
               </h5>
             </td>
           </tr>
+        </tbody>
+      </table>
+      <table class="table table-hover">
+        <thead hidden>
           <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
             <td>
-              <span class="inline pull-left">
-                <input class="form-control" type="text" id="coupon-code" placeholder="Coupon Code">
-              </span>
+              <div class="row">
+                <div class="col-md-4 col-xs-4 col-sm-4 col-lg-4">
+                  <input class="form-control" type="text" id="coupon-code" placeholder="Coupon Code">
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-2 col-lg-2">
+                  <button class="btn btn-outline-primary apply-coupon" type="button" name="button">Apply Coupon</button>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6" hidden>
+                </div>
+              </div>
             </td>
             <td>
-              <button class="btn btn-default apply-coupon" type="button" name="button">Apply Coupon</button>
             </td>
             <td></td>
             <td></td>
             <td></td>
             <td>
-              <a href="/checkout" id="checkout-button" class="btn btn-primary checkout-btn" name="button">Proceed to Checkout</a>
+              <a style="float: right;" href="/checkout" id="checkout-button" class="btn btn-primary checkout-btn" name="button">Proceed to Checkout</a>
             </td>
           </tr>
         </tbody>
       </table>
+      <p id="max-sample">*Maximum of 2 Sample Packs per Person (due to limited supply)</p>
       <% else %>
         <div class="text-center">
           <h3>No selected products.</h3>
         </div>
       <% end %>
-      <p id="max-sample">*Maximum of 2 Sample Packs per Person (due to limited supply)</p>
     </div>
   </div>
 

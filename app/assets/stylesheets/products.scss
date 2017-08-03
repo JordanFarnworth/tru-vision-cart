@@ -3,11 +3,11 @@
 }
 
 .product-cart-image {
-  width: 120px;
+  width: 130px;
 }
 
 #coupon-code {
-  width: 138px !important;
+  width: 110% !important;
 }
 
 .table-item {
@@ -20,4 +20,26 @@
 
 .header-margin {
   margin-top: 40px;
+}
+
+.price-td {
+  text-align: right;
+}
+
+select.special { width: 75%;text-align-last:center; text-align:center; }
+
+.checkout-bottom {
+  border: 1px solid #eceeef !important;
+  height: 50px;
+  vertical-align: middle;
+}
+
+.checkout-bottom h5 {}
+
+table.table-hover {
+  margin-bottom: 0px !important;
+}
+
+table.table-bordered {
+  border: none;
 }
