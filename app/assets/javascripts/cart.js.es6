@@ -1,10 +1,6 @@
 $(document).ready(() => {
   if ($('.cart-page').length > 0) {
 
-    $(".second_div").css({
-      'width': ($(".first_div").width() + 'px !important')
-    });
-
     $('#coupon-code').on('input', (event) => {
       const code = $(event.target).val();
       $('#checkout-button').attr('href', `/checkout?code=${code}`)

@@ -2,6 +2,7 @@ require 'ostruct'
 
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
+  before_filter :set_cache_headers
 
   SAMPLES = {
       'TRUV-Control-30Day-Preferred' => 1,
@@ -105,5 +106,11 @@ class ApplicationController < ActionController::Base
 
   def sku_codes
     @skus ||= Product.all.pluck :sku
+  end
+
+  def set_cache_headers
+    response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
   end
 end
