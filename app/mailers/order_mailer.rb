@@ -3,7 +3,7 @@ class OrderMailer < ApplicationMailer
   # include SendGrid
   default from: 'tru-vision@no-reply.com'
 
-  def order_email(order, billing_address, credit_card_number, products, quantities, total, frd_total, coupon_code)
+  def order_email(order, billing_address, credit_card_number, products, quantities, total, frd_total, coupon_code, shipping)
     @order = order
     @products = products
     @quantities = quantities
@@ -12,6 +12,7 @@ class OrderMailer < ApplicationMailer
     @total = total
     @frd_total = frd_total
     @coupon_code = coupon_code
+    @shipping = shipping
 
     mail(to: ['farnworth.jordan@gmail.com', 'beachbumgg1@gmail.com'], subject: 'Order Confirmation')
 

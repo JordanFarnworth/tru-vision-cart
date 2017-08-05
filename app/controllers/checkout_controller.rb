@@ -101,7 +101,8 @@ class CheckoutController < ApplicationController
     end.reduce({}, :merge)
     @total = number_to_currency(total)
     tax_rate = calc_tax_rate(params)
-    @frd_total = total_with_shipping_and_tax(tax_rate)
+    @frd_total = number_to_currency(total_with_shipping_and_tax(tax_rate))
+    @shipping = calculate_shipping
   end
 
 
@@ -114,7 +115,8 @@ class CheckoutController < ApplicationController
       @quantities,
       @total,
       @frd_total,
-      @coupon_code
+      @coupon_code,
+      @shipping
     ).deliver_later
   end
 

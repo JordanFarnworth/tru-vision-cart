@@ -10,6 +10,11 @@ class ApplicationController < ActionController::Base
       'TRUV-Control-7Day' => 2
     }.freeze
 
+  FREE_SHIPPING_SKUS = [
+    "TRUV-Control-7Day",
+    "TRUV-Wholesale-Allin"
+  ]
+
   COUNTRIES_ALLOWED = [:US, :AU, :CA].freeze
 
   COUNTRY_MAP = {
@@ -41,6 +46,10 @@ class ApplicationController < ActionController::Base
   def not_sample_pack_skus
     regular_sample_skus = sample_pack_skus.map { |k,v| k }
     Product.where.not(sku: regular_sample_skus).pluck :sku
+  end
+
+  def not_free_shipping_skus
+    Product.where.not(sku: FREE_SHIPPING_SKUS).pluck :sku
   end
 
   def site_params
@@ -78,7 +87,7 @@ class ApplicationController < ActionController::Base
 
   def calculate_shipping(*args)
     cart_product_skus = products_from_cookies.pluck :sku
-    result = cart_product_skus.map {|sku| not_sample_pack_skus.include? sku}
+    result = cart_product_skus.map {|sku| not_free_shipping_skus.include? sku}
     if args.include? :int
       result.include?(true) ? 11.99 : 0.0
     else
