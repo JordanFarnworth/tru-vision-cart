@@ -14,7 +14,7 @@ class OrderMailer < ApplicationMailer
     @coupon_code = coupon_code
     @shipping = shipping
 
-    mail(to: ['farnworth.jordan@gmail.com', 'beachbumgg1@gmail.com'], subject: 'Order Confirmation')
+    mail(to: ['my.rssales@gmail.com', 'info@aromadesigns.net'], subject: 'Order Confirmation')
 
     # goign to leave this here incase I ever figure out how to get sendgrid to work with my template
     # but for now /shrug it works
